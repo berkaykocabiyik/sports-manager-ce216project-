@@ -11,17 +11,14 @@ public class League implements ILeague {
         this.standings = new Standings(teams);
     }
 
-    @Override
     public void generateFixtures() {
         this.fixtures = FixtureGenerator.generateRoundRobin(teams);
     }
 
-    @Override
     public void recordMatchResult(String home, String away, int homeScore, int awayScore) {
         standings.update(home, away, homeScore, awayScore);
     }
 
-    @Override
     public Standings getStandings() {
         return standings;
     }
