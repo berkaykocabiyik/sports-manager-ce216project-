@@ -2,6 +2,7 @@ import java.util.List;
 
 public class League implements ILeague {
 
+
     private List<String> teams;
     private List<Fixture> fixtures;
     private Standings standings;
