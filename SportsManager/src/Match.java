@@ -1,18 +1,101 @@
-public class Match {
+package game;
 
-    private String homeTeam;
-    private String awayTeam;
+public abstract class Match {
 
-    public Match(String homeTeam, String awayTeam) {
+    protected String id;
+    protected Team homeTeam;
+    protected Team awayTeam;
+    protected int homeScore;
+    protected int awayScore;
+    protected MatchStatus status;
+    protected java.time.LocalDateTime matchDate;
+    protected int currentPeriod;
+    protected int currentMinute;
+    protected Sport sport;
+
+    protected java.util.List<MatchObserver> observers = new java.util.ArrayList<>();
+
+    public Match(String id, Team homeTeam, Team awayTeam, Sport sport, java.time.LocalDateTime matchDate) {
+        this.id = id;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
+        this.sport = sport;
+        this.matchDate = matchDate;
+        this.homeScore = 0;
+        this.awayScore = 0;
+        this.status = MatchStatus.SCHEDULED;
+        this.currentPeriod = 0;
+        this.currentMinute = 0;
     }
 
-    public String getHomeTeam() {
+    public void startMatch() {
+        this.status = MatchStatus.ONGOING;
+        this.currentPeriod = 1;
+        notifyObservers("Maç başladı!");
+    }
+
+    public void finishMatch() {
+        this.status = MatchStatus.FINISHED;
+        notifyObservers("Maç bitti!");
+    }
+
+    public abstract void addScore(Team team, Player player);
+
+    public abstract void simulateMatch();
+
+    public abstract MatchResult getMatchResult();
+
+    public void addObserver(MatchObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(MatchObserver observer) {
+        observers.remove(observer);
+    }
+
+    protected void notifyObservers(String event) {
+        for (MatchObserver observer : observers) {
+            observer.update(this, event);
+        }
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Team getHomeTeam() {
         return homeTeam;
     }
 
-    public String getAwayTeam() {
+    public Team getAwayTeam() {
         return awayTeam;
+    }
+
+    public int getHomeScore() {
+        return homeScore;
+    }
+
+    public int getAwayScore() {
+        return awayScore;
+    }
+
+    public MatchStatus getStatus() {
+        return status;
+    }
+
+    public java.time.LocalDateTime getMatchDate() {
+        return matchDate;
+    }
+
+    public int getCurrentPeriod() {
+        return currentPeriod;
+    }
+
+    public int getCurrentMinute() {
+        return currentMinute;
+    }
+
+    public Sport getSport() {
+        return sport;
     }
 }

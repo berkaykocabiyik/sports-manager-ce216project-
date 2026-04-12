@@ -1,20 +1,21 @@
-import java.util.List;
+package game;
 
-public class Fixture {
+public interface Fixture {
 
-    private int week;
-    private List<Match> matches;
+    String getName();
 
-    public Fixture(int week, List<Match> matches) {
-        this.week = week;
-        this.matches = matches;
-    }
+    Match[] getAllMatches();
 
-    public List<Match> getMatches() {
-        return matches;
-    }
+    Match[] getWeekMatches(int week);
 
-    public int getWeek() {
-        return week;
-    }
+    Match[] getTeamMatches(Team team);
+
+    Match getNextMatch(Team team);
+
+    int getTotalWeeks();
+
+    java.time.LocalDate getStartDate();
+
+    java.time.LocalDate getEndDate();
+}
 }
