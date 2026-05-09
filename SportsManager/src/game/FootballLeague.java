@@ -2,7 +2,9 @@ package game;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class FootballLeague extends League {
@@ -10,6 +12,8 @@ public class FootballLeague extends League {
     private static final int MAX_TEAMS = 20;
     private int teamCount = 0;
     private final List<Match> playedMatches = new ArrayList<>();
+    private Map<String, Formation> manualFormations = new HashMap<>();
+    private Map<String, Tactic> manualTactics = new HashMap<>();
 
     public FootballLeague(String id, String name) {
         super(id, name, new FootballSport());
@@ -73,6 +77,8 @@ public class FootballLeague extends League {
         setupTeamForMatch(match.getAwayTeam(), match.getHomeTeam());
 
         match.simulateMatch();
+        clearManualPlan(match.getHomeTeam().getId());
+        clearManualPlan(match.getAwayTeam().getId());
         playedMatches.add(match);
 
         updateStandings();
@@ -80,9 +86,51 @@ public class FootballLeague extends League {
 
     private void setupTeamForMatch(Team team, Team opponent) {
         if (team.getCoach() != null) {
-            Formation formation = team.getCoach().selectFormation(team);
-            Tactic tactic = team.getCoach().selectTactic(team, opponent);
+            ensureManualPlans();
+            Formation formation = manualFormations.getOrDefault(
+                team.getId(),
+                team.getCoach().selectFormation(team)
+            );
+            Tactic tactic = manualTactics.getOrDefault(
+                team.getId(),
+                team.getCoach().selectTactic(team, opponent)
+            );
             team.setupLineup(formation, tactic);
+        }
+    }
+
+    public void setManualPlan(String teamId, Formation formation, Tactic tactic) {
+        ensureManualPlans();
+        if (formation != null) {
+            manualFormations.put(teamId, formation);
+        }
+        if (tactic != null) {
+            manualTactics.put(teamId, tactic);
+        }
+    }
+
+    public void clearManualPlan(String teamId) {
+        ensureManualPlans();
+        manualFormations.remove(teamId);
+        manualTactics.remove(teamId);
+    }
+
+    public Formation getManualFormation(String teamId) {
+        ensureManualPlans();
+        return manualFormations.get(teamId);
+    }
+
+    public Tactic getManualTactic(String teamId) {
+        ensureManualPlans();
+        return manualTactics.get(teamId);
+    }
+
+    private void ensureManualPlans() {
+        if (manualFormations == null) {
+            manualFormations = new HashMap<>();
+        }
+        if (manualTactics == null) {
+            manualTactics = new HashMap<>();
         }
     }
 
