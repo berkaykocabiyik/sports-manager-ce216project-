@@ -1,6 +1,6 @@
 package game;
 
-public interface Formation {
+public interface Formation extends java.io.Serializable {
     
     String getName();
     

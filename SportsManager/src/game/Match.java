@@ -1,6 +1,8 @@
 package game;
 
-public abstract class Match {
+public abstract class Match implements java.io.Serializable {
+
+    private static final long serialVersionUID = 1L;
     
     protected String id;
     protected Team homeTeam;
@@ -13,7 +15,7 @@ public abstract class Match {
     protected int currentMinute;
     protected Sport sport;
     
-    protected java.util.List<MatchObserver> observers = new java.util.ArrayList<>();
+    protected transient java.util.List<MatchObserver> observers = new java.util.ArrayList<>();
     
     public Match(String id, Team homeTeam, Team awayTeam, Sport sport, java.time.LocalDateTime matchDate) {
         this.id = id;
@@ -46,14 +48,17 @@ public abstract class Match {
     public abstract MatchResult getMatchResult();
     
     public void addObserver(MatchObserver observer) {
+        ensureObservers();
         observers.add(observer);
     }
     
     public void removeObserver(MatchObserver observer) {
+        ensureObservers();
         observers.remove(observer);
     }
     
     protected void notifyObservers(String event) {
+        ensureObservers();
         for (MatchObserver observer : observers) {
             observer.update(this, event);
         }
@@ -97,5 +102,11 @@ public abstract class Match {
     
     public Sport getSport() {
         return sport;
+    }
+
+    private void ensureObservers() {
+        if (observers == null) {
+            observers = new java.util.ArrayList<>();
+        }
     }
 }

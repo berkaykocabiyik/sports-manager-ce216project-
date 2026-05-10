@@ -33,10 +33,10 @@ public class NameGenerator {
     };
 
     private static final String[] TEAM_NAMES = {
-        "Saryaspor", "Serkanspor", "Aslanspor", "Boğaspor", "Kaplanspor",
+        "Saryaspor", "Yıldızspor", "Aslanspor", "Boğaspor", "Kaplanspor",
         "Şimşekspor", "Fırtınaspor", "Ateşspor", "Çelikspor", "Doğanspor",
         "Gökkuşağı FK", "Anadolu FK", "Başkent FK", "Denizli FK", "Ege FK",
-        "Akdeniz FK", "Amed Spor FK", "Trakya FK", "Marmara FK", "İç Anadolu FK",
+        "Akdeniz FK", "Dicle FK", "Trakya FK", "Marmara FK", "İç Anadolu FK",
         "Güneydoğu FK", "Doğu FK", "Batı FK", "Kuzey FK"
     };
 

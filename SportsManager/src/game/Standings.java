@@ -1,6 +1,6 @@
 package game;
 
-public interface Standings {
+public interface Standings extends java.io.Serializable {
     
     Team[] getRankedTeams();
     

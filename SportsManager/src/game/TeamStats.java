@@ -1,6 +1,6 @@
 package game;
 
-public interface TeamStats {
+public interface TeamStats extends java.io.Serializable {
     
     String getTeamName();
     

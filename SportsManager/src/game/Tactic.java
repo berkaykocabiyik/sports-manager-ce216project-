@@ -1,6 +1,6 @@
 package game;
 
-public interface Tactic {
+public interface Tactic extends java.io.Serializable {
     
     String getName();
     

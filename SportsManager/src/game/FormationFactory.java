@@ -1,6 +1,6 @@
 package game;
 
-public interface FormationFactory {
+public interface FormationFactory extends java.io.Serializable {
     
     Formation createDefensiveFormation();
     

@@ -1,6 +1,6 @@
 package game;
 
-public interface PlayerStats {
+public interface PlayerStats extends java.io.Serializable {
     
     String getPlayerId();
     

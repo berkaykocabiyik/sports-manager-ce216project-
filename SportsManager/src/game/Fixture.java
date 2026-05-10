@@ -1,6 +1,6 @@
 package game;
 
-public interface Fixture {
+public interface Fixture extends java.io.Serializable {
     
     String getName();
     

@@ -1,6 +1,8 @@
 package game;
 
-public abstract class Coach {
+public abstract class Coach implements java.io.Serializable {
+
+    private static final long serialVersionUID = 1L;
     
     protected String id;
     protected String name;

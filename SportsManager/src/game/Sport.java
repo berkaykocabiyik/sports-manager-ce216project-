@@ -1,6 +1,6 @@
 package game;
 
-public interface Sport {
+public interface Sport extends java.io.Serializable {
     
     String getName();
     

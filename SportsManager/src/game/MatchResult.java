@@ -1,6 +1,6 @@
 package game;
 
-public interface MatchResult {
+public interface MatchResult extends java.io.Serializable {
     
     Team getHomeTeam();
     
